@@ -15,6 +15,8 @@ services:
     build: ./requirements/mariadb
     env_file:
       - .env
+    volumes:
+      - ../data/mariadb/mysql:/var/lib/mysql
     restart: always
   
   wordpress:

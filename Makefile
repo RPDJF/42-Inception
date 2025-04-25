@@ -61,6 +61,8 @@ SRC =	$(COMPOSEFILE) \
 CONFIG =	srcs/.env \
 			$(REQ)/nginx/ssl \
 
+DATA = data
+
 
 up: $(SRC) header $(CONFIG)
 		@$(COMPOSER) -f $(COMPOSEFILE) up -d
@@ -80,6 +82,8 @@ build: $(SRC)
 fclean: clean
 		@echo -e "\t[INFO]\t[Inception]\tClearing config files..."
 		@rm -rf $(CONFIG)
+		@echo -e "\t[INFO]\t[Inception]\tClearing data..."
+		@sudo rm -rf $(DATA)
 		@echo -e "\t[INFO]\t[Inception]\tProject is fully cleaned 🗑️"
 
 clean:

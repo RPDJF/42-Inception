@@ -6,8 +6,6 @@ RUN apk update && apk add mariadb mariadb-client
 
 RUN mkdir -p /run/mysqld && chown -R mysql:mysql /run/mysqld
 
-RUN mysql_install_db --user=mysql --datadir=/var/lib/mysql
-
 RUN sed -i '/skip-networking/d' /etc/my.cnf.d/mariadb-server.cnf
 
 COPY ./docker-entrypoint.sh ./docker-entrypoint.sh
