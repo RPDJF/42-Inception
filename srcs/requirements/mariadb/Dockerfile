@@ -1,13 +1,8 @@
-FROM alpine:latest
+FROM alpine:3.21.3
 
 EXPOSE 3306
 
 RUN apk update && apk add mariadb mariadb-client
-
-ENV MYSQL_ROOT_PASSWORD=mysql
-ENV MYSQL_USER=mysql
-ENV MYSQL_PASSWORD=mysql
-ENV MYSQL_DATABASE=database
 
 RUN mkdir -p /run/mysqld && chown -R mysql:mysql /run/mysqld
 
