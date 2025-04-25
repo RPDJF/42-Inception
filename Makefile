@@ -74,7 +74,8 @@ down: $(SRC)
 		@$(COMPOSER) -f $(COMPOSEFILE) down
 
 build: $(SRC)
-		@echo Missing config files!\nGenerating default config...
+		@echo -e Missing config files!
+		@echo -e Generating default config...
 		@bash srcs/setup.sh
 		@echo -e "\nBuilding docker images...\n"
 		@$(COMPOSER) -f $(COMPOSEFILE) build > /dev/null
