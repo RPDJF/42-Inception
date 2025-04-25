@@ -1,0 +1,1 @@
+cp srcs/.env.example srcs/.env
