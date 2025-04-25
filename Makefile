@@ -54,8 +54,10 @@ ARGS =
 
 
 SRC =	$(COMPOSE) \
+		srcs/.env \
 		srcs/requirements/nginx/Dockerfile \
 		srcs/requirements/mariadb/Dockerfile \
+		srcs/requirements/wordpress/Dockerfile \
 
 
 up: $(SRC) header
