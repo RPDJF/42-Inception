@@ -47,51 +47,47 @@ define APP_HEADER
 endef
 export APP_HEADER
 
+REQ = srcs/requirements
 
-COMPOSE = srcs/docker-compose.yml
+COMPOSEFILE = srcs/docker-compose.yml
 COMPOSER = docker compose
-ARGS =
+
+SRC =	$(COMPOSEFILE) \
+		$(REQ)/nginx/Dockerfile \
+		$(REQ)/mariadb/Dockerfile \
+		$(REQ)/wordpress/Dockerfile \
 
 
-SRC =	$(COMPOSE) \
-		srcs/requirements/nginx/Dockerfile \
-		srcs/requirements/mariadb/Dockerfile \
-		srcs/requirements/wordpress/Dockerfile \
+CONFIG =	srcs/.env \
+			$(REQ)/nginx/ssl \
 
 
-SETUP =	srcs/.env \
-		srcs/requirements/nginx/ssl \
+up: $(SRC) header $(CONFIG)
+		@$(COMPOSER) -f $(COMPOSEFILE) up -d
 
+$(CONFIG):
+		@$(MAKE) build --no-print-directory
 
-up: $(SRC) header $(SETUP)
-		@$(COMPOSER) -f $(COMPOSE) up -d $(ARGS)
+down: $(SRC)
+		@$(COMPOSER) -f $(COMPOSEFILE) down
 
-down: $(SRC) header
-		@$(COMPOSER) -f $(COMPOSE) down
+build: $(SRC)
+		@echo Missing config files!\nGenerating default config...
+		@bash srcs/setup.sh
+		@echo -e "\nBuilding docker images...\n"
+		@$(COMPOSER) -f $(COMPOSEFILE) build > /dev/null
 
-build: $(SRC) header
-		@bash setup.sh
-		@$(COMPOSER) -f $(COMPOSE) build
-
-$(SETUP):
-		$(MAKE) build
+fclean: clean
+		@echo -e "\t[INFO]\t[Inception]\tClearing config files..."
+		@rm -rf $(CONFIG)
+		@echo -e "\t[INFO]\t[Inception]\tProject is fully cleaned 🗑️"
 
 clean:
-
-fclean: down clean
-		@rm -rf srcs/.env
-		@rm -rf srcs/requirements/nginx/ssl
-		@echo -e "\t[INFO]\t[$(NAME)]\t$(NAME) is fully deleted 🗑️"
-
-help:
-		@echo -e "$$HEADER"
-		@echo -e "all							  -	   Build $(NAME)"
-		@echo -e "clean							-	   Clean temporary files"
-		@echo -e "fclean						   -	   Clean the whole build"
-		@echo -e "debug							-	   Runs the program with g3 fsanitize=address"
-		@echo -e "$(NAME)				  -	   Build the $(NAME) with necessary libs"
+		@echo -e "\t[INFO]\t[Inception]\tShutting down containers..."
+		@$(COMPOSER) -f $(COMPOSEFILE) down 2>/dev/null || echo -n
 
 header:
 		@echo -e "$$HEADER"
+		@echo -e "$$APP_HEADER"
 
 .PHONY = all clean fclean re header help build up down
