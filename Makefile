@@ -54,36 +54,44 @@ ARGS =
 
 
 SRC =	$(COMPOSE) \
-		srcs/.env \
 		srcs/requirements/nginx/Dockerfile \
 		srcs/requirements/mariadb/Dockerfile \
 		srcs/requirements/wordpress/Dockerfile \
 
 
-up: $(SRC) header
+SETUP =	srcs/.env \
+		srcs/requirements/nginx/ssl \
+
+
+up: $(SRC) header $(SETUP)
 		@$(COMPOSER) -f $(COMPOSE) up -d $(ARGS)
 
 down: $(SRC) header
 		@$(COMPOSER) -f $(COMPOSE) down
 
 build: $(SRC) header
+		@bash setup.sh
 		@$(COMPOSER) -f $(COMPOSE) build
+
+$(SETUP):
+		$(MAKE) build
 
 clean:
 
-fclean: clean
-		@rm -f $(NAME)
-		@echo "\t[INFO]\t[$(NAME)]\t$(NAME) is fully deleted 🗑️"
+fclean: down clean
+		@rm -rf srcs/.env
+		@rm -rf srcs/requirements/nginx/ssl
+		@echo -e "\t[INFO]\t[$(NAME)]\t$(NAME) is fully deleted 🗑️"
 
 help:
-		@echo "$$HEADER"
-		@echo "all							  -	   Build $(NAME)"
-		@echo "clean							-	   Clean temporary files"
-		@echo "fclean						   -	   Clean the whole build"
-		@echo "debug							-	   Runs the program with g3 fsanitize=address"
-		@echo "$(NAME)				  -	   Build the $(NAME) with necessary libs"
+		@echo -e "$$HEADER"
+		@echo -e "all							  -	   Build $(NAME)"
+		@echo -e "clean							-	   Clean temporary files"
+		@echo -e "fclean						   -	   Clean the whole build"
+		@echo -e "debug							-	   Runs the program with g3 fsanitize=address"
+		@echo -e "$(NAME)				  -	   Build the $(NAME) with necessary libs"
 
 header:
-		@echo "$$HEADER"
+		@echo -e "$$HEADER"
 
-.PHONY = all clean fclean re header help build
+.PHONY = all clean fclean re header help build up down

@@ -1,0 +1,3 @@
+#!/bin/bash
+echo Starting wordpress...
+php-fpm83 -F

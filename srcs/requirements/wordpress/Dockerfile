@@ -15,4 +15,6 @@ RUN curl -O https://wordpress.org/latest.tar.gz && \
 
 EXPOSE 9000
 
-ENTRYPOINT ["php-fpm83", "-F"]
+COPY ./docker-entrypoint.sh ./docker-entrypoint.sh
+
+ENTRYPOINT ["/bin/sh", "./docker-entrypoint.sh"]
