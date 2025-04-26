@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 echo "Starting MariaDB..."
 mariadb-install-db --user=mysql --datadir=/var/lib/mysql > /dev/null 2> /dev/null
 mariadbd --user=mysql &

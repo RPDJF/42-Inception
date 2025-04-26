@@ -37,6 +37,17 @@ services:
     networks:
       - inception-network
     restart: on-failure
+  
+  vsftpd:
+    container_name: vsftpd
+    build: ./requirements/vsftpd
+    env_file:
+     - .env
+    volumes:
+      - wordpress:/var/www/wordpress
+    ports:
+      - 21:21
+    restart: on-failure
 
 volumes:
   mariadb:
