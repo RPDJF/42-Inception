@@ -32,6 +32,10 @@ define( 'WP_DEBUG', true );
 define( 'WP_DEBUG_LOG', true );
 define( 'WP_DEBUG_DISPLAY', false );
 
+/** Redis configuration */
+define( 'WP_REDIS_HOST', 'redis' );  // Use DNS hostname
+define( 'WP_REDIS_PORT', 6379 );  // Optional, defaults to 6379
+
 /* That's all, stop editing! Happy publishing. */
 
 /** Absolute path to the WordPress directory. */

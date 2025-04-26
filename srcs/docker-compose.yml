@@ -37,6 +37,15 @@ services:
     networks:
       - inception-network
     restart: on-failure
+
+  redis:
+    container_name: redis
+    build: ./requirements/redis
+    env_file:
+     - .env
+    networks:
+      - inception-network
+    restart: on-failure
   
   vsftpd:
     container_name: vsftpd
