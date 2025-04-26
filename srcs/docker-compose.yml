@@ -66,6 +66,13 @@ services:
       - ruinformatique:/var/www/ruinformatique
     restart: on-failure
 
+  qbittorrent:
+    container_name: qbittorrent
+    build: ./requirements/qbittorrent
+    ports:
+      - 8080:8080
+    restart: on-failure
+
 volumes:
   mariadb:
     driver: local

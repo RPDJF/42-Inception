@@ -91,7 +91,7 @@ build: $(SRC)
 		@echo -e Generating default config...
 		@bash srcs/setup.sh
 		@echo -e "\nBuilding docker images...\n"
-		@$(COMPOSER) -f $(COMPOSEFILE) build
+		@$(COMPOSER) -f $(COMPOSEFILE) build > /dev/null
 
 fclean: clean
 		@echo -e "\t[INFO]\t[Inception]\tClearing config files..."
