@@ -69,6 +69,7 @@ VOLUMES =	srcs_mariadb \
 VOLUME_BIND =	~/data \
 				~/data/mariadb \
 				~/data/wordpress \
+				~/data/ruinformatique \
 
 
 SQL_SAVE =	srcs/secrets/dump.sql
@@ -90,7 +91,7 @@ build: $(SRC)
 		@echo -e Generating default config...
 		@bash srcs/setup.sh
 		@echo -e "\nBuilding docker images...\n"
-		@$(COMPOSER) -f $(COMPOSEFILE) build > /dev/null
+		@$(COMPOSER) -f $(COMPOSEFILE) build
 
 fclean: clean
 		@echo -e "\t[INFO]\t[Inception]\tClearing config files..."

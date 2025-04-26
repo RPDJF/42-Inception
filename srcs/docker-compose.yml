@@ -9,6 +9,7 @@ services:
       - ./requirements/nginx/nginx.conf:/etc/nginx/nginx.conf
       - ./requirements/nginx/ssl/:/etc/nginx/ssl/
       - wordpress:/var/www/wordpress
+      - ruinformatique:/var/www/ruinformatique
     networks:
       - inception-network
     restart: on-failure
@@ -57,6 +58,13 @@ services:
     ports:
       - 21:21
     restart: on-failure
+  
+  ruinformatique-www:
+    container_name: ruinformatique-www
+    build: ./requirements/ruinformatique-www
+    volumes:
+      - ruinformatique:/var/www/ruinformatique
+    restart: on-failure
 
 volumes:
   mariadb:
@@ -70,6 +78,12 @@ volumes:
     driver_opts:
       type: none
       device: ~/data/wordpress
+      o: bind
+  ruinformatique:
+    driver: local
+    driver_opts:
+      type: none
+      device: ~/data/ruinformatique
       o: bind
 
 networks:
