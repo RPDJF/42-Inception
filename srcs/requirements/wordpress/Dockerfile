@@ -1,7 +1,11 @@
 FROM alpine:3.21.3
 
-RUN apk update && apk add mysql-client libcrypto3 libssl3 php83 php83-common php83-fpm php83-opcache php83-mysqlnd php83-mysqli php83-pdo_mysql curl
+RUN apk update && apk add mysql-client libcrypto3 libssl3 php83 php83-common php83-fpm php83-opcache php83-mysqlnd php83-mysqli php83-pdo_mysql curl less php83-phar php83-mbstring
 
+# install and start redis
+RUN apk add redis
+
+# go back to wordpress
 RUN mkdir -p /run/php
 
 WORKDIR /var/www/wordpress
@@ -12,6 +16,11 @@ RUN curl -O https://wordpress.org/latest.tar.gz && \
 RUN adduser -D -g 'www' www
 
 RUN chown -R www:www /var/www/wordpress /run/php
+
+# install wp cli and redis-cache plugin
+RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+RUN chmod +x wp-cli.phar
+RUN mv ./wp-cli.phar /usr/local/bin/wp
 
 EXPOSE 9000
 

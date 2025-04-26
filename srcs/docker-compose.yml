@@ -27,8 +27,6 @@ services:
   
   wordpress:
     container_name: wordpress
-    depends_on:
-      - mariadb
     build: ./requirements/wordpress
     env_file:
      - .env
@@ -36,7 +34,6 @@ services:
       - wordpress:/var/www/wordpress
       - ./requirements/wordpress/php-fpm.conf:/etc/php83/php-fpm.conf
       - ./requirements/wordpress/wp-config.php:/var/www/wordpress/wp-config.php
-      - ./requirements/wordpress/wp-content:/var/www/wordpress/wp-content
     networks:
       - inception-network
     restart: on-failure

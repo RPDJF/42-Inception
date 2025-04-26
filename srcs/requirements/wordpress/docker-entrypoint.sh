@@ -6,5 +6,12 @@ while ! mysql -u ${MYSQL_USER} -h ${MYSQL_HOST} -p${MYSQL_PASSWORD} ${MYSQL_DATA
     sleep 1
 done
 
+# install and enable redis-cache
+echo "Starting redis daemon..."
+redis-server --daemonize yes 2>/dev/null
+echo Installing redis-cache plugin...
+wp plugin install redis-cache --activate
+wp redis enable
+
 echo Starting wordpress...
 php-fpm83 -F
