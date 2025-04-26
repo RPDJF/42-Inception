@@ -71,6 +71,8 @@ VOLUME_BIND =	~/data \
 				~/data/wordpress \
 
 
+SQL_SAVE =	srcs/secrets/dump.sql
+
 up: $(SRC) header $(CONFIG)
 		@mkdir -p $(VOLUME_BIND)
 		@$(COMPOSER) -f $(COMPOSEFILE) up -d
@@ -79,6 +81,8 @@ $(CONFIG):
 		@$(MAKE) build --no-print-directory
 
 down: $(SRC)
+		@echo "Dumping mariadb to secrets/dump.sql..."
+		@docker exec -i mariadb sh -c 'mysqldump -u root -p$$MYSQL_ROOT_PASSWORD -h localhost $$MYSQL_DATABASE' > $(SQL_SAVE)_tmp && rm -rf $(SQL_SAVE) && mv $(SQL_SAVE)_tmp $(SQL_SAVE) || rm -rf $(SQL_SAVE)_tmp
 		@$(COMPOSER) -f $(COMPOSEFILE) down
 
 build: $(SRC)
@@ -98,7 +102,7 @@ fclean: clean
 
 clean:
 		@echo -e "\t[INFO]\t[Inception]\tShutting down containers..."
-		@$(COMPOSER) -f $(COMPOSEFILE) down || echo -n
+		@$(MAKE) down --no-print-directory || echo -n
 
 header:
 		@echo -e "$$HEADER"

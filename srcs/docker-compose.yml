@@ -19,6 +19,7 @@ services:
     env_file:
       - .env
     volumes:
+      - ./secrets/dump.sql:/dump.sql:ro
       - mariadb:/var/lib/mysql
     networks:
       - inception-network
@@ -35,6 +36,7 @@ services:
       - wordpress:/var/www/wordpress
       - ./requirements/wordpress/php-fpm.conf:/etc/php83/php-fpm.conf
       - ./requirements/wordpress/wp-config.php:/var/www/wordpress/wp-config.php
+      - ./requirements/wordpress/wp-content:/var/www/wordpress/wp-content
     networks:
       - inception-network
     restart: on-failure
