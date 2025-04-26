@@ -1,3 +1,6 @@
+# adding temporary dns
+(cat /etc/hosts | grep rude-jes.42.fr) || echo "127.0.0.1 rude-jes.42.fr" | sudo tee -a /etc/hosts > /dev/null
+
 # use .env.example as .env
 echo Generating generic .env file...
 cp srcs/.env.example srcs/.env
