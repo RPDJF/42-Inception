@@ -13,6 +13,9 @@ openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
   -keyout srcs/requirements/nginx/ssl/rude-jes.42.fr.key \
   -out srcs/requirements/nginx/ssl/rude-jes.42.fr.crt \
   -subj "/C=CH/ST=Lausanne/L=Lausanne/O=42/CN=rude-jes.42.fr" 2> /dev/null
+sudo cp srcs/requirements/nginx/ssl/rude-jes.42.fr.crt /usr/local/share/ca-certificates/rude-jes.42.fr.crt
+sudo update-ca-certificates
+
 echo Changing certificates permissions...
 chmod 644 srcs/requirements/nginx/ssl/rude-jes.42.fr.crt
 chmod 600 srcs/requirements/nginx/ssl/rude-jes.42.fr.key
