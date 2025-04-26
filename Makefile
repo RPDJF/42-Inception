@@ -61,10 +61,18 @@ SRC =	$(COMPOSEFILE) \
 CONFIG =	srcs/.env \
 			$(REQ)/nginx/ssl \
 
-DATA = data
+
+VOLUMES =	srcs_mariadb \
+			srcs_wordpress \
+
+
+VOLUME_BIND =	~/data \
+				~/data/mariadb \
+				~/data/wordpress \
 
 
 up: $(SRC) header $(CONFIG)
+		@mkdir -p $(VOLUME_BIND)
 		@$(COMPOSER) -f $(COMPOSEFILE) up -d
 
 $(CONFIG):
@@ -83,13 +91,14 @@ build: $(SRC)
 fclean: clean
 		@echo -e "\t[INFO]\t[Inception]\tClearing config files..."
 		@rm -rf $(CONFIG)
-		@echo -e "\t[INFO]\t[Inception]\tClearing data..."
-		@sudo rm -rf $(DATA)
+		@echo -e "\t[INFO]\t[Inception]\tClearing volumes..."
+		@docker volume rm $(VOLUMES) 2> /dev/null || echo -n
+		@sudo rm -rf $(VOLUME_BIND)
 		@echo -e "\t[INFO]\t[Inception]\tProject is fully cleaned 🗑️"
 
 clean:
 		@echo -e "\t[INFO]\t[Inception]\tShutting down containers..."
-		@$(COMPOSER) -f $(COMPOSEFILE) down 2>/dev/null || echo -n
+		@$(COMPOSER) -f $(COMPOSEFILE) down || echo -n
 
 header:
 		@echo -e "$$HEADER"
