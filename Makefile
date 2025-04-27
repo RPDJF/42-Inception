@@ -73,11 +73,12 @@ VOLUMES =	$(NAME)_mariadb \
 			$(NAME)_wordpress \
 			$(NAME)_ruinformatique \
 
+VOLUME_ROOT = ~/data \
 
-VOLUME_BIND =	~/data \
-				~/data/mariadb \
-				~/data/wordpress \
-				~/data/ruinformatique \
+VOLUME_BIND =	$(VOLUME_ROOT)/mariadb \
+				$(VOLUME_ROOT)/wordpress \
+				$(VOLUME_ROOT)/ruinformatique \
+				$(VOLUME_ROOT)/qbittorrent \
 
 
 up: $(SRC) header $(CONFIG)
@@ -102,7 +103,7 @@ fclean: clean
 		@rm -rf $(CONFIG) 2> /dev/null || true
 		@echo -e "\t[INFO]\t[$(NAME)]\tClearing volumes..."
 		@docker volume rm $(VOLUMES) 2> /dev/null || true
-		@sudo rm -rf $(VOLUME_BIND)
+		@sudo rm -rf $(VOLUME_ROOT)
 		@echo -e "\t[INFO]\t[$(NAME)]\tProject is fully cleaned 🗑️"
 
 clean:
