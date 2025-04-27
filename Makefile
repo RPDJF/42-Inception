@@ -102,6 +102,8 @@ build: $(SRC)
 		@$(COMPOSER) -p $(NAME) -f $(COMPOSEFILE) build > /dev/null
 
 fclean: clean
+		@echo "\t[INFO]\t[$(NAME)]\tRemoving images..."
+		@docker images --filter=reference="inception-*" -q | xargs docker rmi -f > /dev/null 2> /dev/null
 		@echo -e "\t[INFO]\t[$(NAME)]\tClearing config files..."
 		@rm -rf $(CONFIG) 2> /dev/null || true
 		@echo -e "\t[INFO]\t[$(NAME)]\tClearing volumes..."

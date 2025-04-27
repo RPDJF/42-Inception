@@ -55,4 +55,4 @@ When you finished playing around with 42-Inception, you can wipe it from your sy
 make fclean
 ```
 
-It will wipe out any change made by inception, except for the images
+It will wipe out any change made by inception
