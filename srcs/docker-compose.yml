@@ -65,6 +65,7 @@ services:
     env_file:
      - .env
     volumes:
+      - ./requirements/vsftpd/vsftpd.conf:/etc/vsftpd/vsftpd.conf
       - wordpress:/var/www/wordpress
     ports:
       - 21:21
@@ -84,7 +85,8 @@ services:
       - mynetwork
     volumes:
       - ~/data/qBittorrent/Downloads:/Downloads
-      - ~/data/qBittorrent/config/:/root/.config/qBittorrent/
+      - ~/data/qBittorrent/config:/qBittorrent/config
+      - ./requirements/qbittorrent/qBittorrent.conf:/qBittorrent/config/qBittorrent.conf
     restart: on-failure
 
 volumes:

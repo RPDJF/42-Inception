@@ -1,1 +1,1 @@
-redis-server --protected-mode no
+exec redis-server --protected-mode no

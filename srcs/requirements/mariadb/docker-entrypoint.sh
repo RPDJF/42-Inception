@@ -2,6 +2,7 @@
 echo "Starting MariaDB..."
 mariadb-install-db --user=mysql --datadir=/var/lib/mysql > /dev/null 2> /dev/null
 mariadbd --user=mysql &
+MARIADB_PID=$!
 
 while ! mariadb -u root -h localhost -p${MYSQL_ROOT_PASSWORD} -e "SELECT 1;" >/dev/null 2>&1; do
 	echo "Waiting for MariaDB to be ready..."
@@ -23,4 +24,4 @@ if [ -z "$DB_EXISTS" ]; then
 	echo "Done creating database"
 fi
 
-wait
+wait "$MARIADB_PID"

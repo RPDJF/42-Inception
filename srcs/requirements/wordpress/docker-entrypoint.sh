@@ -27,4 +27,4 @@ if [ -e /var/www/wordpress/wp-config-sample.php ]; then
 fi
 
 echo Starting wordpress...
-php-fpm83 -F
+exec php-fpm83 -F

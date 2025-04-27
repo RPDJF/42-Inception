@@ -1,4 +1,4 @@
-FROM alpine:3.20.6
+FROM alpine:3.20.6 AS builder
 
 RUN apk add git npm
 
@@ -12,6 +12,8 @@ RUN npm install
 
 RUN npm run build
 
-RUN mkdir -p /var/www/
+FROM alpine:3.20.6
 
-RUN mv src /var/www/ruinformatique
+WORKDIR /var/www/ruinformatique
+
+COPY --from=builder /app/ruinformatique-www/src/ /var/www/ruinformatique/
