@@ -11,7 +11,7 @@ services:
       - wordpress:/var/www/wordpress
       - ruinformatique:/var/www/ruinformatique
     networks:
-      - inception-network
+      - mynetwork
     restart: on-failure
   
   mariadb:
@@ -22,7 +22,7 @@ services:
     volumes:
       - mariadb:/var/lib/mysql
     networks:
-      - inception-network
+      - mynetwork
     restart: on-failure
   
   wordpress:
@@ -35,7 +35,7 @@ services:
       - ./requirements/wordpress/php-fpm.conf:/etc/php83/php-fpm.conf
       - ./requirements/wordpress/wp-config.php:/var/www/wordpress/wp-config.php
     networks:
-      - inception-network
+      - mynetwork
     restart: on-failure
 
   redis:
@@ -44,7 +44,7 @@ services:
     env_file:
      - .env
     networks:
-      - inception-network
+      - mynetwork
     restart: on-failure
   
   vsftpd:
@@ -68,8 +68,8 @@ services:
   qbittorrent:
     container_name: qbittorrent
     build: ./requirements/qbittorrent
-    ports:
-      - 8080:8080
+    networks:
+      - mynetwork
     restart: on-failure
 
 volumes:
@@ -93,5 +93,5 @@ volumes:
       o: bind
 
 networks:
-  inception-network:
+  mynetwork:
     driver: bridge
