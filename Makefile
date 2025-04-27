@@ -72,8 +72,6 @@ VOLUME_BIND =	~/data \
 				~/data/ruinformatique \
 
 
-SQL_SAVE =	srcs/secrets/dump.sql
-
 up: $(SRC) header $(CONFIG)
 		@mkdir -p $(VOLUME_BIND)
 		@$(COMPOSER) -f $(COMPOSEFILE) up -d
@@ -82,8 +80,6 @@ $(CONFIG):
 		@$(MAKE) build --no-print-directory
 
 down: $(SRC)
-		@echo "Dumping mariadb to secrets/dump.sql..."
-		@docker exec -i mariadb sh -c 'mysqldump -u root -p$$MYSQL_ROOT_PASSWORD -h localhost $$MYSQL_DATABASE' > $(SQL_SAVE)_tmp && rm -rf $(SQL_SAVE) && mv $(SQL_SAVE)_tmp $(SQL_SAVE) || rm -rf $(SQL_SAVE)_tmp
 		@$(COMPOSER) -f $(COMPOSEFILE) down
 
 build: $(SRC)
@@ -109,4 +105,4 @@ header:
 		@echo -e "$$HEADER"
 		@echo -e "$$APP_HEADER"
 
-.PHONY = all clean fclean re header help build up down
+.PHONY = all clean fclean header build up down

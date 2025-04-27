@@ -20,10 +20,6 @@ if [ -z "$DB_EXISTS" ]; then
 		CREATE USER '${MYSQL_USER}'@'%' IDENTIFIED BY '${MYSQL_PASSWORD}';
 		GRANT ALL PRIVILEGES ON *.* TO '${MYSQL_USER}'@'%';
 		FLUSH PRIVILEGES;"
-	if [ -f "/dump.sql" ]; then
-		echo "Importing dump.sql dump..."
-		(mariadb -u root -p${MYSQL_ROOT_PASSWORD} ${MYSQL_DATABASE} -h localhost < /dump.sql  && echo "Success import") || echo "Failed to import dump file"
-	fi
 	echo "Done creating database"
 fi
 
