@@ -70,6 +70,9 @@ services:
     build: ./requirements/qbittorrent
     networks:
       - mynetwork
+    volumes:
+      - ~/data/qBittorrent/Downloads:/Downloads
+      - ~/data/qBittorrent/config/:/root/.config/qBittorrent/
     restart: on-failure
 
 volumes:
