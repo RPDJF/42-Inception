@@ -72,13 +72,16 @@ CONFIG =	srcs/.env \
 VOLUMES =	$(NAME)_mariadb \
 			$(NAME)_wordpress \
 			$(NAME)_ruinformatique \
+			$(NAME)_adminer \
 
-VOLUME_ROOT = ~/data \
+
+VOLUME_ROOT = ~/data
 
 VOLUME_BIND =	$(VOLUME_ROOT)/mariadb \
 				$(VOLUME_ROOT)/wordpress \
 				$(VOLUME_ROOT)/ruinformatique \
 				$(VOLUME_ROOT)/qbittorrent \
+				$(VOLUME_ROOT)/adminer \
 
 
 up: $(SRC) header $(CONFIG)

@@ -3,12 +3,12 @@ services:
     container_name: nginx
     build: ./requirements/nginx/
     ports:
-#      - 80:80
       - 443:443
     volumes:
       - ./requirements/nginx/nginx.conf:/etc/nginx/nginx.conf
       - ./requirements/nginx/ssl/:/etc/nginx/ssl/
       - wordpress:/var/www/wordpress
+      - adminer:/var/www/adminer
       - ruinformatique:/var/www/ruinformatique
     networks:
       - mynetwork
@@ -34,6 +34,18 @@ services:
       - wordpress:/var/www/wordpress
       - ./requirements/wordpress/php-fpm.conf:/etc/php83/php-fpm.conf
       - ./requirements/wordpress/wp-config.php:/var/www/wordpress/wp-config.php
+    networks:
+      - mynetwork
+    restart: on-failure
+
+  adminer:
+    container_name: adminer
+    build: ./requirements/adminer
+    env_file:
+     - .env
+    volumes:
+      - adminer:/var/www/adminer
+      - ./requirements/adminer/php-fpm.conf:/etc/php83/php-fpm.conf
     networks:
       - mynetwork
     restart: on-failure
@@ -87,6 +99,12 @@ volumes:
     driver_opts:
       type: none
       device: ~/data/wordpress
+      o: bind
+  adminer:
+    driver: local
+    driver_opts:
+      type: none
+      device: ~/data/adminer
       o: bind
   ruinformatique:
     driver: local
