@@ -80,7 +80,7 @@ VOLUME_ROOT = ~/data
 VOLUME_BIND =	$(VOLUME_ROOT)/mariadb \
 				$(VOLUME_ROOT)/wordpress \
 				$(VOLUME_ROOT)/ruinformatique \
-				$(VOLUME_ROOT)/qbittorrent \
+				$(VOLUME_ROOT)/qBittorrent \
 				$(VOLUME_ROOT)/adminer \
 
 
