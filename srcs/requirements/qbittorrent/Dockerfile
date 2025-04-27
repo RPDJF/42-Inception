@@ -4,11 +4,7 @@ EXPOSE 8080
 
 RUN apk update && apk add qbittorrent-nox
 
-RUN adduser -D -g 'qbuser' qbuser
-
-RUN mkdir /qBittorrent
-
-RUN chown qbuser:qbuser /qBittorrent -R
+RUN mkdir /qBittorrent /Downloads
 
 COPY ./docker-entrypoint.sh ./docker-entrypoint.sh
 
