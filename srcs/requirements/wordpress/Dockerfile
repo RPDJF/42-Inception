@@ -17,6 +17,8 @@ RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli
 RUN chmod +x wp-cli.phar
 RUN mv ./wp-cli.phar /usr/local/bin/wp
 
+COPY ./php-fpm.conf /etc/php83/php-fpm.conf
+
 EXPOSE 9000
 
 COPY ./docker-entrypoint.sh ./docker-entrypoint.sh

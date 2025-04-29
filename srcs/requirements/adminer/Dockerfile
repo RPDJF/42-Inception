@@ -10,6 +10,8 @@ RUN adduser -D -g 'www' www
 
 RUN chown -R www:www /var/www/adminer
 
+COPY ./php-fpm.conf /etc/php83/php-fpm.conf
+
 EXPOSE 9000
 
 COPY ./docker-entrypoint.sh ./docker-entrypoint.sh

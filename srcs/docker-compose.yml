@@ -32,7 +32,6 @@ services:
      - .env
     volumes:
       - wordpress:/var/www/wordpress
-      - ./requirements/wordpress/php-fpm.conf:/etc/php83/php-fpm.conf
       - ./requirements/wordpress/wp-config.php:/var/www/wordpress/wp-config.php
     networks:
       - mynetwork
@@ -45,7 +44,6 @@ services:
      - .env
     volumes:
       - adminer:/var/www/adminer
-      - ./requirements/adminer/php-fpm.conf:/etc/php83/php-fpm.conf
     networks:
       - mynetwork
     restart: on-failure
